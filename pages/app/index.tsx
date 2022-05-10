@@ -1,27 +1,4 @@
-import {
-	Avatar,
-	Box,
-	Collapse,
-	Drawer,
-	DrawerContent,
-	DrawerOverlay,
-	Flex,
-	Icon,
-	IconButton,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	SimpleGrid,
-	Text,
-	useColorModeValue,
-	useDisclosure,
-} from '@chakra-ui/react'
-import { FaBell, FaClipboardCheck, FaRss } from 'react-icons/fa'
-import { AiFillGift } from 'react-icons/ai'
-import { BsGearFill } from 'react-icons/bs'
-import { FiMenu, FiSearch } from 'react-icons/fi'
-import { HiCode, HiCollection } from 'react-icons/hi'
-import { MdHome, MdKeyboardArrowRight } from 'react-icons/md'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import DashboardLayout from '../../layout/Layout'
 import TokenBox from '../../components/TokenBox'

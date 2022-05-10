@@ -1,5 +1,5 @@
 import { StarIcon } from '@chakra-ui/icons'
-import { Box, Badge } from '@chakra-ui/react'
+import { Box, Badge, useColorMode } from '@chakra-ui/react'
 
 type TokenProps = {
 	name: string
@@ -8,6 +8,7 @@ type TokenProps = {
 }
 
 export default function TokenBox({ name, units, transactions }: TokenProps) {
+	const { colorMode } = useColorMode();
 	return (
 		<Box
 			maxW={{ base: '300px', sm: '250px' }}
@@ -42,7 +43,7 @@ export default function TokenBox({ name, units, transactions }: TokenProps) {
 
 				<Box my={3}>
 					{units}
-					<Box as='span' color='gray.300' fontSize='sm' ml={2}>
+					<Box as='span' color={colorMode === "light" ? "gray.600" : "gray.200"} fontSize='sm' ml={2}>
 						units
 					</Box>
 				</Box>

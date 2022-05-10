@@ -1,4 +1,5 @@
 import {
+    Badge,
 	Box,
 	Drawer,
 	DrawerContent,
@@ -14,7 +15,7 @@ import { FaClipboardCheck, FaHistory } from 'react-icons/fa'
 import { MdAccountCircle } from 'react-icons/md'
 import { AiFillGift } from 'react-icons/ai'
 import { BsGearFill } from 'react-icons/bs'
-import { FiMenu } from 'react-icons/fi'
+import { FiMenu, FiUsers } from 'react-icons/fi'
 import { HiCode } from 'react-icons/hi'
 import { RiLogoutBoxFill } from 'react-icons/ri'
 import { MdHome, MdKeyboardArrowRight } from 'react-icons/md'
@@ -22,7 +23,11 @@ import React from 'react'
 import Link from 'next/link'
 import ThemeToggle from '../components/ThemeToggle'
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function AdminDashboard({
+	children,
+}: {
+	children: React.ReactNode
+}) {
 	const sidebar = useDisclosure()
 	const integrations = useDisclosure()
 	const color = useColorModeValue('gray.600', 'gray.300')
@@ -97,15 +102,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 				aria-label='Main Navigation'
 				height='90%'
 			>
-				<Link href='/app'>
+				<Link href='/admin'>
 					<NavItem icon={MdHome}>Home</NavItem>
 				</Link>
-				<Link href='/app/profile'>
-					<NavItem icon={MdAccountCircle}>Profile</NavItem>
+				<Link href='/admin/users'>
+					<NavItem icon={FiUsers}>Users</NavItem>
 				</Link>
-				<Link href='/app/history'>
+				{/* <Link href='/app/history'>
 					<NavItem icon={FaHistory}>History</NavItem>
-				</Link>
+				</Link> */}
 				<Box mt='auto'>
 					<NavItem icon={RiLogoutBoxFill}>Logout</NavItem>
 				</Box>
@@ -172,8 +177,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 						size='sm'
 					/>
 					<Box display='flex'>
-						<Text size='sm' fontSize='sm' fontWeight='light'>Signed in as:</Text>
-						<Text size='sm' ml={2} fontSize='sm' fontWeight='bold'>Obed</Text>
+						<Badge colorScheme='green'>Admin</Badge>
 					</Box>
 
 					<Flex align='center'>

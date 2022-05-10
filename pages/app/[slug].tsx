@@ -3,6 +3,6 @@ import DashboardLayout from '../../layout/Layout'
 
 export default function Slug() {
   return (
-    <DashboardLayout>Dynamic Page</DashboardLayout>
+    <DashboardLayout>Dynamic Page</appLayout>
   )
 }
