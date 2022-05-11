@@ -56,9 +56,8 @@ model Token {
   id            String      @id @default(cuid())
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  title         String      @db.VarChar(255)
-  author        User?       @relation(fields: [authorId], references: [id])
-  authorId      String?
+  user          User?       @relation(fields: [userId], references: [id])
+  userId        String?
   royalty       Royalty[]
   loyalty       Loyalty[]
   bonuses       Bonus[]

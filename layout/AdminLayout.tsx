@@ -1,4 +1,5 @@
 import {
+	Avatar,
     Badge,
 	Box,
 	Drawer,
@@ -9,8 +10,10 @@ import {
 	IconButton,
 	Text,
 	useColorModeValue,
+	useColorMode,
 	useDisclosure,
 } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { FaClipboardCheck, FaHistory } from 'react-icons/fa'
 import { MdAccountCircle } from 'react-icons/md'
 import { AiFillGift } from 'react-icons/ai'
@@ -21,14 +24,20 @@ import { RiLogoutBoxFill } from 'react-icons/ri'
 import { MdHome, MdKeyboardArrowRight } from 'react-icons/md'
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import ThemeToggle from '../components/ThemeToggle'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 export default function AdminDashboard({
 	children,
 }: {
 	children: React.ReactNode
 }) {
+
+	const { data: session } = useSession();
+	const router = useRouter();
+	const { colorMode } = useColorMode();
+
 	const sidebar = useDisclosure()
 	const integrations = useDisclosure()
 	const color = useColorModeValue('gray.600', 'gray.300')
@@ -141,10 +150,17 @@ export default function AdminDashboard({
 			</Flex>
 		</Box>
 	)
+
+	
+	// useEffect(() => {		
+	// 	if (session?.user?.email?.includes('ad') || session?.user?.email?.includes('admin')) {
+	// 		return router.push('/app')
+	// 	}
+	// }, [router, session])
 	return (
 		<Box
 			as='section'
-			bg={useColorModeValue('gray.50', 'gray.700')}
+			bg={colorMode === 'light' ? 'gray.50' : 'gray.700'}
 			minH='100vh'
 		>
 			<SidebarContent display={{ base: 'none', md: 'unset' }} />
@@ -165,9 +181,9 @@ export default function AdminDashboard({
 					justify='space-between'
 					w='full'
 					px='4'
-					bg={useColorModeValue('white', 'gray.800')}
+					bg={colorMode === 'light' ? 'white' : 'gray.800'}
 					borderBottomWidth='1px'
-					borderColor={useColorModeValue('inherit', 'gray.700')}
+					borderColor={colorMode === 'light' ? 'inherit' : 'gray.700'}
 					h='14'
 				>
 					<IconButton
@@ -182,6 +198,7 @@ export default function AdminDashboard({
 					</Box>
 
 					<Flex align='center'>
+						<Avatar src={session?.user?.email === "edeygingeram@gmail.com" ? session?.user?.image as string : ""} mr={2} size='sm' />
 						<ThemeToggle />
 					</Flex>
 				</Flex>

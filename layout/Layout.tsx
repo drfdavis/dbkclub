@@ -107,12 +107,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 				<Link href='/app'>
 					<NavItem icon={MdHome}>Home</NavItem>
 				</Link>
-				<Link href='/app/profile'>
+				{/* <Link href='/app/profile'>
 					<NavItem icon={MdAccountCircle}>Profile</NavItem>
-				</Link>
-				<Link href='/app/history'>
+				</Link> */}
+				{/* <Link href='/app/history'>
 					<NavItem icon={FaHistory}>History</NavItem>
-				</Link>
+				</Link> */}
 				<Box
 					mt='auto'
 					as='button'
