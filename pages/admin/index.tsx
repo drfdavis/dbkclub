@@ -1,6 +1,5 @@
-import { Box, Button, Heading, Input, Select, SimpleGrid } from '@chakra-ui/react'
+import { Box, Button, Heading, Input, Select } from '@chakra-ui/react'
 import React from 'react'
-import TokenBox from '../../components/TokenBox'
 import AdminDashboard from '../../layout/AdminLayout'
 
 export default function AdminPage() {

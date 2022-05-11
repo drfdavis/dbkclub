@@ -22,6 +22,7 @@ import { MdHome, MdKeyboardArrowRight } from 'react-icons/md'
 import React from 'react'
 import Link from 'next/link'
 import ThemeToggle from '../components/ThemeToggle'
+import { signOut } from 'next-auth/react'
 
 export default function AdminDashboard({
 	children,
@@ -111,7 +112,7 @@ export default function AdminDashboard({
 				{/* <Link href='/app/history'>
 					<NavItem icon={FaHistory}>History</NavItem>
 				</Link> */}
-				<Box mt='auto'>
+				<Box mt='auto' onClick={() => signOut()}>
 					<NavItem icon={RiLogoutBoxFill}>Logout</NavItem>
 				</Box>
 				{/* I might use this later */}

@@ -1,5 +1,8 @@
 import {
+	Avatar,
+	Badge,
 	Box,
+	Button,
 	Drawer,
 	DrawerContent,
 	DrawerOverlay,
@@ -22,7 +25,11 @@ import React from 'react'
 import Link from 'next/link'
 import ThemeToggle from '../components/ThemeToggle'
 
+import { signOut, useSession } from 'next-auth/react'
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+	const { data: session } = useSession()
+
 	const sidebar = useDisclosure()
 	const integrations = useDisclosure()
 	const color = useColorModeValue('gray.600', 'gray.300')
@@ -106,8 +113,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 				<Link href='/app/history'>
 					<NavItem icon={FaHistory}>History</NavItem>
 				</Link>
-				<Box mt='auto'>
-					<NavItem icon={RiLogoutBoxFill}>Logout</NavItem>
+				<Box
+					mt='auto'
+					as='button'
+					onClick={() => signOut()}
+					cursor='pointer'
+				>
+						<NavItem icon={RiLogoutBoxFill}>Logout</NavItem>
 				</Box>
 				{/* I might use this later */}
 
@@ -172,11 +184,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 						size='sm'
 					/>
 					<Box display='flex'>
-						<Text size='sm' fontSize='sm' fontWeight='light'>Signed in as:</Text>
-						<Text size='sm' ml={2} fontSize='sm' fontWeight='bold'>Obed</Text>
+						{/* <Text size='6px' fontSize='sm' fontWeight='bold' textTransform='uppercase'>
+							user:
+						</Text> */}
+						<Text size='sm' ml={1} fontSize='sm' fontWeight='bold'>
+							<Badge colorScheme='teal'>{session?.user?.name}</Badge>
+						</Text>
 					</Box>
 
 					<Flex align='center'>
+						<Avatar mr={2} src={session?.user?.image as string} size='sm' />
 						<ThemeToggle />
 					</Flex>
 				</Flex>

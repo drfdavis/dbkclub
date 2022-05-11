@@ -9,10 +9,15 @@ import {
 	Image,
 	Text,
 	Icon,
+	Flex,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import { signIn, useSession } from 'next-auth/react'
+import { AiFillGithub } from 'react-icons/ai'
+import { FcGoogle } from 'react-icons/fc'
 
 const IndexHero: NextPage = () => {
+	const { data: session, status } = useSession()
 	return (
 		<Box px={8} py={24} mx='auto'>
 			<Box
@@ -59,37 +64,41 @@ const IndexHero: NextPage = () => {
 					spacing={2}
 					justifyContent={{ sm: 'left', md: 'center' }}
 				>
-					<Link href='/register'>
-						<Button
-							as='a'
-							variant='solid'
-							colorScheme='blue'
-							display='inline-flex'
-							alignItems='center'
-							justifyContent='center'
-							w={{ base: 'full', sm: 'auto' }}
-							mb={{ base: 2, sm: 0 }}
-							size='lg'
-							cursor='pointer'
-						>
-							Register
-						</Button>
-					</Link>
-					<Link href='/login'>
-						<Button
-							as='a'
-							colorScheme='facebook'
-							display='inline-flex'
-							alignItems='center'
-							justifyContent='center'
-							w={{ base: 'full', sm: 'auto' }}
-							mb={{ base: 2, sm: 0 }}
-							size='lg'
-							cursor='pointer'
-						>
-							Log in
-						</Button>
-					</Link>
+					{!session?.user ? (
+						<>
+							<Button
+								onClick={() => signIn('google', { callbackUrl: '/app' })}
+								leftIcon={<FcGoogle />}
+								isLoading={status === 'loading'}
+								disabled={status === 'loading'}
+								size='sm'
+								px={5}
+								bg='blue.400'
+								color='white'
+								variant='outline'
+								_hover={{
+									bg: 'blue.500',
+								}}
+								_active={{
+									bg: 'blue.600',
+								}}
+							>
+								Continue with Google
+							</Button>
+						</>
+					) : (
+						<>
+							<Link href='/app' passHref>
+								<Button size='sm' bg='blue.500' color='white' _hover={{
+									bg: 'blue.600',
+								}} _active={{
+									bg: 'blue.700',
+								}} px={5}>
+									Dashboard
+								</Button>
+							</Link>
+						</>
+					)}
 				</Stack>
 			</Box>
 		</Box>
@@ -97,6 +106,10 @@ const IndexHero: NextPage = () => {
 }
 
 export default IndexHero
+
+
+
+
 
 
 
