@@ -7,14 +7,26 @@ import {
 	Td,
 	TableCaption,
 	TableContainer,
-    Box,
-    Badge
+	Box,
+	Badge,
 } from '@chakra-ui/react'
 import { PrismaClient } from '@prisma/client'
 import { GetServerSideProps } from 'next'
 import { getSession, GetSessionParams } from 'next-auth/react'
 import React from 'react'
 import AdminDashboard from '../../layout/AdminLayout'
+
+type User = {
+	id: string
+	email: string
+	image: string
+	name: string
+}
+
+// type Royalty = {
+// 	id: string;
+// 	userId: string;
+// }
 
 export default function AdminPage({ users }: { users: any }) {
 	console.log(users)
@@ -52,28 +64,17 @@ export default function AdminPage({ users }: { users: any }) {
 								</Tr>
 							</Thead>
 							<Tbody>
-								{users.map((user: any) => (
-									<>
-										<Tr key={user.id}>
-											<Td>{user.email}</Td>
-											<Td>{user.tokens.length}</Td>
-											<Td>25.4</Td>
-											<Td>25.4</Td>
-										</Tr>
-									</>
-								))}
-								{/* <Tr>
-									<Td>Quavo</Td>
-									<Td>45.3</Td>
-									<Td>30.48</Td>
-									<Td>30.48</Td>
-								</Tr>
-								<Tr>
-									<Td>Takeoff</Td>
-									<Td>54.9</Td>
-									<Td>0.91444</Td>
-									<Td>0.91444</Td>
-								</Tr> */}
+								{users.length !== 0 &&
+									users.map((user: any) => (
+										<>
+											<Tr key={user.id}>
+												<Td>{user.email}</Td>
+												<Td>{user.royalty}</Td>
+												<Td>{user.loyalty}</Td>
+												<Td>{user.bonus}</Td>
+											</Tr>
+										</>
+									))}
 							</Tbody>
 						</Table>
 					</TableContainer>
@@ -83,44 +84,24 @@ export default function AdminPage({ users }: { users: any }) {
 	)
 }
 
-
-export const getServerSideProps: GetServerSideProps = async (context: GetSessionParams) => {
-	let prisma = new PrismaClient();
+export const getServerSideProps: GetServerSideProps = async (
+	context: GetSessionParams
+) => {
+	let prisma = new PrismaClient()
 	const users = await prisma.user.findMany({
-		include: {
-			tokens: {
-				select: {
-					loyalty: true,
-					royalty: true,
-					bonuses: true,
-				}
-			}
-		}
-	})
-
-	users.forEach(user => {
-		user.createdAt = JSON.parse(JSON.stringify(user.createdAt));
-		user.updatedAt = JSON.parse(JSON.stringify(user.updatedAt));
-		user.emailVerified = JSON.parse(JSON.stringify(user.emailVerified));
-		user.tokens.forEach(token => {
-			token.royalty.forEach(r => {
-				r.createdAt = JSON.parse(JSON.stringify(r.createdAt));
-				r.updatedAt = JSON.parse(JSON.stringify(r.updatedAt));
-			})
-			token.loyalty.forEach(l => {
-				l.createdAt = JSON.parse(JSON.stringify(l.createdAt));
-				l.updatedAt = JSON.parse(JSON.stringify(l.updatedAt));
-			})
-			token.bonuses.forEach(b => {
-				b.createdAt = JSON.parse(JSON.stringify(b.createdAt));
-				b.updatedAt = JSON.parse(JSON.stringify(b.updatedAt));
-			})
-		})
+		select: {
+			email: true,
+			name: true,
+			id: true,
+			bonus: true,
+			loyalty: true,
+			royalty: true,
+		},
 	})
 
 	return {
 		props: {
-			users: users
-		}
+			users: users,
+		},
 	}
 }

@@ -20,27 +20,16 @@ export default async function handler(
 
 	const { amount, tokenType, user } = parseData
 
-	// await prisma.royalty.create({
-	//     data: {
-	//         number: amount,
-	//         tokenId: uuidv4(),
-	//     }
-	// })
-
 	if (tokenType === 'Royalty') {
-		await prisma.token
-			.create({
+		await prisma.user
+			.update({
+				where: {
+					email: user,
+				},
 				data: {
-                    user: {
-                        connect: {
-                            email: user,
-                        }
-                    },
 					royalty: {
-						create: {
-							number: parseFloat(amount),
-						},
-					},
+						increment: parseFloat(amount),
+					}
 				},
 			})
 			.then(() => {
@@ -50,18 +39,14 @@ export default async function handler(
 				res.status(500).json({ success: false, message: e.message })
 			})
 	} else if (tokenType === 'Loyalty') {
-		await prisma.token
-			.create({
+		await prisma.user
+			.update({
+				where: {
+					email: user,
+				},
 				data: {
-					user: {
-						connect: {
-							email: user,
-						},
-					},
 					loyalty: {
-						create: {
-							number: parseFloat(amount),
-						},
+						increment: parseFloat(amount),
 					},
 				},
 			})
@@ -72,18 +57,14 @@ export default async function handler(
 				res.status(500).json({ success: false, message: e.message })
 			})
 	} else {
-		await prisma.token
-			.create({
+		await prisma.user
+			.update({
+				where: {
+					email: user,
+				},
 				data: {
-					user: {
-						connect: {
-							email: user,
-						},
-					},
-					bonuses: {
-						create: {
-							number: parseFloat(amount),
-						},
+					bonus: {
+						increment: parseFloat(amount),
 					},
 				},
 			})

@@ -116,7 +116,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 				<Box
 					mt='auto'
 					as='button'
-					onClick={() => signOut()}
+					onClick={() => signOut({ callbackUrl: '/' })}
 					cursor='pointer'
 				>
 						<NavItem icon={RiLogoutBoxFill}>Logout</NavItem>

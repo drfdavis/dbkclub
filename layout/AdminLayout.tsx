@@ -121,7 +121,7 @@ export default function AdminDashboard({
 				{/* <Link href='/app/history'>
 					<NavItem icon={FaHistory}>History</NavItem>
 				</Link> */}
-				<Box mt='auto' onClick={() => signOut()}>
+				<Box mt='auto' onClick={() => signOut({ callbackUrl: '/' })}>
 					<NavItem icon={RiLogoutBoxFill}>Logout</NavItem>
 				</Box>
 				{/* I might use this later */}

@@ -37,52 +37,11 @@ CREATE TABLE "User" (
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
+    "royalty" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+    "loyalty" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+    "bonus" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Token" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "title" VARCHAR(255) NOT NULL,
-    "authorId" TEXT,
-
-    CONSTRAINT "Token_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Royalty" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "number" DOUBLE PRECISION NOT NULL,
-    "tokenId" TEXT NOT NULL,
-
-    CONSTRAINT "Royalty_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Loyalty" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "number" DOUBLE PRECISION NOT NULL,
-    "tokenId" TEXT NOT NULL,
-
-    CONSTRAINT "Loyalty_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Bonus" (
-    "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "number" DOUBLE PRECISION NOT NULL,
-    "tokenId" TEXT NOT NULL,
-
-    CONSTRAINT "Bonus_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -112,15 +71,3 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Token" ADD CONSTRAINT "Token_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Royalty" ADD CONSTRAINT "Royalty_tokenId_fkey" FOREIGN KEY ("tokenId") REFERENCES "Token"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Loyalty" ADD CONSTRAINT "Loyalty_tokenId_fkey" FOREIGN KEY ("tokenId") REFERENCES "Token"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Bonus" ADD CONSTRAINT "Bonus_tokenId_fkey" FOREIGN KEY ("tokenId") REFERENCES "Token"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
