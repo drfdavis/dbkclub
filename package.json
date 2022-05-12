@@ -3,13 +3,11 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"vercel-build": "prisma generate --schema=./lib/prisma/schema.prisma && prisma migrate deploy --schema=./lib/prisma/schema.prisma && next build",
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
-		"prisma:generate": "prisma generate --schema ./lib/prisma/schema.prisma",
-		"prisma:migrate": "prisma generate --schema=./lib/prisma/schema.prisma && prisma migrate deploy --schema=./lib/prisma/schema.prisma",
-		"vercel-build": "prisma generate --schema=./lib/prisma/schema.prisma && prisma migrate deploy --schema=./lib/prisma/schema.prisma && next build"
+		"lint": "next lint"
 	},
 	"dependencies": {
 		"@chakra-ui/icons": "^1.1.7",
