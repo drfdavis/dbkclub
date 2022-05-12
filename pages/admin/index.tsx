@@ -70,24 +70,6 @@ export default function AdminPage({ users }: { users: any }) {
 									{user.email}
 								</option>
 							))}
-							{/* <option value='royalty'>Osama Bin Laden</option>
-						<option value='loyalty'>Houdini</option>
-						<option value='bonuses'>Aquaman</option>
-						<option value='bonuses'>Batman</option>
-						<option value='bonuses'>JCOLE</option>
-						<option value='bonuses'>Superman</option>
-						<option value='bonuses'>Future</option>
-						<option value='bonuses'>Travis</option>
-						<option value='bonuses'>Scott</option>
-						<option value='bonuses'>Quavo</option>
-						<option value='bonuses'>Huncho</option>
-						<option value='bonuses'>Takeoff</option>
-						<option value='bonuses'>Offset</option>
-						<option value='bonuses'>Kendrick</option>
-						<option value='bonuses'>Lamar</option>
-						<option value='bonuses'>EarthGang</option>
-						<option value='bonuses'>JID</option>
-						<option value='bonuses'>Lennox</option> */}
 						</Select>
 						<FormErrorMessage>
 							{errors.user && errors.user.message}
