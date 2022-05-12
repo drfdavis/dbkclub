@@ -24,6 +24,7 @@ export default NextAuth({
 		// 	from: process.env.EMAIL_FROM,
 		// }),
 	],
+	secret: process.env.NEXTAUTH_SECRET as string,
 	callbacks: {
 		// session: async ({ session, user }) => {
 		// 	// Over here, I had to add the `user` property to the session object
