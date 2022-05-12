@@ -10,7 +10,7 @@ import {
 	Box,
 	Badge,
 } from '@chakra-ui/react'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../../lib/prisma/prisma'
 import { GetServerSideProps } from 'next'
 import { getSession, GetSessionParams } from 'next-auth/react'
 import React from 'react'
@@ -87,7 +87,6 @@ export default function AdminPage({ users }: { users: any }) {
 export const getServerSideProps: GetServerSideProps = async (
 	context: GetSessionParams
 ) => {
-	let prisma = new PrismaClient()
 	const users = await prisma.user.findMany({
 		select: {
 			email: true,

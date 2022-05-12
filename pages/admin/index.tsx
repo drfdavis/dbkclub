@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import AdminDashboard from '../../layout/AdminLayout'
 import { GetSessionParams, signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../../lib/prisma/prisma'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
 
@@ -128,7 +128,6 @@ export default function AdminPage({ users }: { users: any }) {
 export const getServerSideProps: GetServerSideProps = async (
 	context: GetSessionParams
 ) => {
-	let prisma = new PrismaClient()
 	const users = await prisma.user.findMany({
 		select: {
 			id: true,
