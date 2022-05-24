@@ -49,7 +49,7 @@ export default NextAuth({
 					placeholder: 'supercoolemail@me.com',
 				},
 				// name: { label: 'Name', type: 'text', required: true, },
-				password: { label: 'Password', type: 'password', required: true, placeholder: 'I am a zombie, aaaahh' },
+				password: { label: 'Password', type: 'password', required: true, placeholder: 'Very long password' },
 			},
 			async authorize(credentials, req) {
 				const res = await fetch(`${BASE_URL}/api/credentials`, {
