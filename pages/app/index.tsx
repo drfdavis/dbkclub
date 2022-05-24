@@ -8,8 +8,8 @@ import { GetSessionParams, getSession, useSession } from 'next-auth/react'
 export default function DashboardPage({ tokens }: { tokens: any }) {
 	const { data: session, status } = useSession();
 
-	console.log(session)
-	console.log(tokens)
+	console.log(session?.user)
+	// console.log(tokens)
 	return (
 		<div>
 			<DashboardLayout>
@@ -36,7 +36,7 @@ export const getServerSideProps = async (context: GetSessionParams) => {
 	const session = await getSession({ req: context.req });
 	const tokens = await prisma.user.findUnique({
 		where: {
-			email: session?.user?.email as string,
+			email: session?.user?.user?.email as string,
 		},
 		select: {
 			loyalty: true,

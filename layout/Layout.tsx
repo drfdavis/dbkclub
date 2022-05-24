@@ -188,12 +188,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 							user:
 						</Text> */}
 						<Text size='sm' ml={1} fontSize='sm' fontWeight='bold'>
-							<Badge colorScheme='teal'>{session?.user?.name}</Badge>
+							<Badge colorScheme='teal'>{session?.user?.name ?? session?.user?.email}</Badge>
 						</Text>
 					</Box>
 
 					<Flex align='center'>
-						<Avatar mr={2} src={session?.user?.image as string} size='sm' />
+						<Avatar mr={2} src={session?.user?.user.image as string ?? '/demo.png'} size='sm' />
 						<ThemeToggle />
 					</Flex>
 				</Flex>

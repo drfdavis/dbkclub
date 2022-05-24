@@ -13,7 +13,8 @@ import { signIn, useSession } from 'next-auth/react'
 import { FcGoogle } from 'react-icons/fc'
 
 const IndexHero: NextPage = () => {
-	const { data: session, status } = useSession()
+	const { data: session, status } = useSession();
+	console.log(session?.user?.user!.email);
 	return (
 		<div className='svg-background'>
 			<Box px={8} py={24} mx='auto'>
