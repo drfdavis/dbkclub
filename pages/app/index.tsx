@@ -1,12 +1,14 @@
 import { Box, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import DashboardLayout from '../../layout/Layout'
-import TokenBox from '../../components/TokenBox'
+import { RoyaltyBox } from '../../components/TokenBox'
 import { prisma } from '../../lib/prisma/prisma'
 import { GetSessionParams, getSession, useSession } from 'next-auth/react'
 
 export default function DashboardPage({ tokens }: { tokens: any }) {
 	const { data: session, status } = useSession();
+
+	console.log(session)
 	console.log(tokens)
 	return (
 		<div>
@@ -19,9 +21,7 @@ export default function DashboardPage({ tokens }: { tokens: any }) {
 						maxW={{ base: '100%', md: '90%' }}
 						margin='0 auto'
 					>
-						<TokenBox name='Royalty' amount={tokens.royalty} />
-						<TokenBox name='Loyalty' amount={tokens.loyalty} />
-						<TokenBox name='Bonuses' amount={tokens.bonus} />
+						<RoyaltyBox name='Royalty' amount={tokens.royalty} />
 					</SimpleGrid>
 				</Box>
 			</DashboardLayout>
@@ -36,7 +36,7 @@ export const getServerSideProps = async (context: GetSessionParams) => {
 	const session = await getSession({ req: context.req });
 	const tokens = await prisma.user.findUnique({
 		where: {
-			email: session?.user?.email as string
+			email: session?.user?.email as string,
 		},
 		select: {
 			loyalty: true,

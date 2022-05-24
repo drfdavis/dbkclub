@@ -1,15 +1,21 @@
 import { StarIcon } from '@chakra-ui/icons'
-import { Box, Badge, useColorMode } from '@chakra-ui/react'
+import { Box, Badge, useColorMode, Text } from '@chakra-ui/react'
 
 type TokenProps = {
 	name: string;
 	amount: string;
-	units?: string;
 }
 
-export default function TokenBox({ name, amount, units }: TokenProps) {
-	const { colorMode } = useColorMode();
+type RoyaltyProps = {
+	name: string;
+	amount: string;
+}
+
+export const RoyaltyBox = ({ name, amount }: RoyaltyProps) => {
+	const { colorMode } = useColorMode()
+	const APR = 70;
 	const calculatedUnits = (Number(amount) * 1) / 20000
+	const calculatedBonus = (calculatedUnits / Number(amount)) * APR;
 	return (
 		<Box
 			maxW={{ base: '300px', sm: '250px' }}
@@ -47,22 +53,32 @@ export default function TokenBox({ name, amount, units }: TokenProps) {
 				</Box>
 
 				<Box my={3}>
-					{calculatedUnits}
 					<Box
-						as='span'
+						as='p'
 						color={colorMode === 'light' ? 'gray.600' : 'gray.200'}
 						fontSize='sm'
-						ml={2}
+						mr={2}
+						fontWeight='bold'
+						textTransform='uppercase'
 					>
 						units
 					</Box>
+					<Text fontSize={13}>{calculatedUnits}</Text>
 				</Box>
 
-				{/* <Box display='flex' mt='2' alignItems='center'>
-					<Box as='span' color='gray.600' fontSize='sm'>
-						{units} units
+				<Box my={3}>
+					<Box
+						as='p'
+						color={colorMode === 'light' ? 'gray.600' : 'gray.200'}
+						fontSize='sm'
+						mr={2}
+						fontWeight='bold'
+						textTransform='uppercase'
+					>
+						bonus
 					</Box>
-				</Box> */}
+					<Text fontSize={13}>{calculatedBonus}</Text>
+				</Box>
 			</Box>
 		</Box>
 	)
