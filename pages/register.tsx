@@ -16,6 +16,7 @@ import {
 import Link from 'next/link'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { AiOutlineGoogle } from 'react-icons/ai'
 
 export default function SignupCard() {
 	const [showPassword, setShowPassword] = useState(false)
@@ -43,7 +44,7 @@ export default function SignupCard() {
 					p={8}
 				>
 					<Stack spacing={4}>
-						<Stack direction={{ base: 'column', md: 'row' }} >
+						{/* <Stack direction={{ base: 'column', md: 'row' }} >
 							<Box>
 								<FormControl id='firstName' isRequired>
 									<FormLabel>First Name</FormLabel>
@@ -56,12 +57,12 @@ export default function SignupCard() {
 									<Input type='text' />
 								</FormControl>
 							</Box>
-						</Stack>
+						</Stack> */}
 						<FormControl id='email' isRequired>
 							<FormLabel>Email address</FormLabel>
 							<Input type='email' />
 						</FormControl>
-						<FormControl id='password' isRequired>
+						{/* <FormControl id='password' isRequired>
 							<FormLabel>Password</FormLabel>
 							<InputGroup>
 								<Input type={showPassword ? 'text' : 'password'} />
@@ -76,11 +77,10 @@ export default function SignupCard() {
 									</Button>
 								</InputRightElement>
 							</InputGroup>
-						</FormControl>
+						</FormControl> */}
 						<Stack spacing={10} pt={2}>
 							<Button
 								loadingText='Submitting'
-								size='lg'
 								bg={'blue.400'}
 								color={'white'}
 								_hover={{
@@ -88,6 +88,17 @@ export default function SignupCard() {
 								}}
 							>
 								Sign up
+							</Button>
+							<Button
+								leftIcon={<AiOutlineGoogle />}
+								loadingText='Submitting'
+								bg={'blue.400'}
+								color={'white'}
+								_hover={{
+									bg: 'blue.500',
+								}}
+							>
+								Continue with Google
 							</Button>
 						</Stack>
 						<Stack pt={6}>

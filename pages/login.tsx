@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 
 import Link from 'next/link'
+import { AiOutlineGoogle } from 'react-icons/ai'
 
 export default function SimpleCard() {
 	return (
@@ -26,11 +27,8 @@ export default function SimpleCard() {
 				<Stack align={'center'}>
 					<Heading fontSize={'4xl'}>Sign in to your account</Heading>
 					<Text fontSize={'lg'} color={'gray.600'}>
-						to enjoy all of our cool{' '}
-						<Text display='inline' color={'blue.400'}>
-							features
-						</Text>{' '}
-						✌️
+						to continue where you left off{' '}
+						⚡
 					</Text>
 				</Stack>
 				<Box
@@ -67,6 +65,17 @@ export default function SimpleCard() {
 								}}
 							>
 								Sign in
+							</Button>
+							<Button
+								leftIcon={<AiOutlineGoogle />}
+								loadingText='Submitting'
+								bg={'blue.400'}
+								color={'white'}
+								_hover={{
+									bg: 'blue.500',
+								}}
+							>
+								Continue with Google
 							</Button>
 							<Stack>
 								<Text align={'center'}>
