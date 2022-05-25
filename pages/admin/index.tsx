@@ -6,26 +6,41 @@ import {
 	Select,
 	FormErrorMessage,
 	useToast,
+	Badge,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AdminDashboard from '../../layout/AdminLayout'
-import { GetSessionParams, signOut, useSession } from 'next-auth/react'
+import { GetSessionParams } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { prisma } from '../../lib/prisma/prisma'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
 import APR from '../../components/APR'
 
-export default function AdminPage({ users }: { users: any }) {
-	const router = useRouter()
-	const { data: session } = useSession()
+export default function AdminPage({
+	users,
+	totalTokens,
+}: {
+	users: any
+	totalTokens: any
+}) {
 	const toast = useToast()
 
-	const [apr, setApr] = useState(0)
+	const reducedRoyalty = totalTokens.reduce(function (
+		accumulator: any,
+		currentValue: any
+	) {
+		return accumulator + currentValue.royalty
+	},
+	0)
 
-	const handleAPRChange = (e: any) => {
-		setApr(e.target.value)
-	}
+	const reducedLoyalty = totalTokens.reduce(function (
+		accumulator: any,
+		currentValue: any
+	) {
+		return accumulator + currentValue.loyalty
+	},
+	0)
 
 	const { handleSubmit, register, formState } = useForm()
 	const { isSubmitting, errors } = formState
@@ -61,38 +76,6 @@ export default function AdminPage({ users }: { users: any }) {
 			})
 	}
 
-	const onAdjustAPR = async (apr: any) => {
-		await fetch('/api/adjust-apr', {
-			method: 'POST',
-			body: JSON.stringify({ apr }),
-		})
-			.then(res => {
-				return console.log(res)
-				if (res.status === 200) {
-					toast({
-						title: 'Success',
-						description: 'APR Adjusted',
-						status: 'success',
-						duration: 3000,
-						isClosable: true,
-						position: 'top-end',
-					})
-				} else {
-					toast({
-						title: 'Error',
-						description: 'Something went wrong',
-						status: 'error',
-						duration: 3000,
-						isClosable: true,
-						position: 'top-end',
-					})
-				}
-			})
-			.catch(err => {
-				console.log(err)
-			})
-	}
-
 	// useEffect(() => {
 	// 	if (session?.user?.email !== 'edeygingeram@gmail.com') {
 	// 		router.push('/app')
@@ -103,6 +86,16 @@ export default function AdminPage({ users }: { users: any }) {
 		<div>
 			<AdminDashboard>
 				<Box mt={10} maxW={{ base: '90%', md: '70%', lg: '40%' }} m='0 auto'>
+					<Box flex='row' flexWrap='wrap'>
+						<Heading as='h4' size='xs' mb={4}>
+							Total Royalty In circulation:{' '}
+							<Badge colorScheme='purple'>{reducedRoyalty}</Badge>
+						</Heading>
+						<Heading as='h4' size='xs' mb={4}>
+							Total Loyalty In circulation:{' '}
+							<Badge colorScheme='blue'>{reducedLoyalty}</Badge>
+						</Heading>
+					</Box>
 					<Heading size='lg' mb={10}>
 						Add Tokens
 					</Heading>
@@ -129,7 +122,7 @@ export default function AdminPage({ users }: { users: any }) {
 						>
 							<option value='Royalty'>Royalty</option>
 							<option value='Loyalty'>Loyalty</option>
-							<option value='Bonus'>Bonus</option>
+							{/* <option value='Bonus'>Bonus</option> */}
 						</Select>
 						<FormErrorMessage>
 							{errors.tokenType && errors.tokenType.message}
@@ -183,9 +176,17 @@ export const getServerSideProps: GetServerSideProps = async (
 		},
 	})
 
+	const totalTokens = await prisma.user.findMany({
+		select: {
+			royalty: true,
+			loyalty: true,
+		},
+	})
+
 	return {
 		props: {
 			users: users,
+			totalTokens: totalTokens,
 		},
 	}
 }
