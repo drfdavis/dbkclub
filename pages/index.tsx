@@ -13,7 +13,9 @@ import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
 export default function SplitScreen() {
-	const { data: session, status } = useSession()
+	const { data: session, status } = useSession();
+	console.log(session);
+	
 	return (
 		<Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
 			<Flex
@@ -69,7 +71,7 @@ export default function SplitScreen() {
 						Sign in to enjoy the benefits of the Diamond Back Token Systems
 					</Text>
 					<Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
-						{session?.user.user ? (
+						{session?.user?.user ? (
 							<Link href='/app'>
 								<Button
 									rounded={'full'}

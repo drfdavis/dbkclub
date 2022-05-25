@@ -20,6 +20,8 @@ export default function DashboardPage({ tokens, APR }: { tokens: any, APR: { amo
 						margin='0 auto'
 					>
 						<RoyaltyBox name='Royalty' amount={tokens.royalty} APR={APR.amount} />
+						{/* Delete this later to use data from the database */}
+						<RoyaltyBox name='Loyalty' amount={'7'} APR={APR.amount} />
 					</SimpleGrid>
 				</Box>
 			</DashboardLayout>
@@ -31,12 +33,11 @@ export const getServerSideProps = async (context: GetSessionParams) => {
 	const session = await getSession({ req: context.req })
 	const tokens = await prisma.user.findUnique({
 		where: {
-			email: session?.user?.user?.email as string,
+			id: session?.user?.user?.id as string
 		},
 		select: {
 			loyalty: true,
 			royalty: true,
-			bonus: true,
 		},
 	})
 
