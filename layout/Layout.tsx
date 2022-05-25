@@ -93,7 +93,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 					color={useColorModeValue('brand.500', 'white')}
 					fontWeight='semibold'
 				>
-					LOGO
+					Diamond Back
 				</Text>
 			</Flex>
 			<Flex
@@ -188,7 +188,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 							user:
 						</Text> */}
 						<Text size='sm' ml={1} fontSize='sm' fontWeight='bold'>
-							<Badge colorScheme='teal'>{session?.user?.name ?? session?.user?.email}</Badge>
+							<Badge colorScheme='teal'>{session?.user?.user.name ?? session?.user?.user.email}</Badge>
 						</Text>
 					</Box>
 

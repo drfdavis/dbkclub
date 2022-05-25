@@ -9,13 +9,13 @@ type TokenProps = {
 type RoyaltyProps = {
 	name: string;
 	amount: string;
+	APR: number;
 }
 
-export const RoyaltyBox = ({ name, amount }: RoyaltyProps) => {
-	const { colorMode } = useColorMode()
-	const APR = 70;
+export const RoyaltyBox = ({ name, amount, APR }: RoyaltyProps) => {
+	const { colorMode } = useColorMode();
 	const calculatedUnits = (Number(amount) * 1) / 20000
-	const calculatedBonus = (calculatedUnits / Number(amount)) * APR;
+	const calculatedBonus = (calculatedUnits / Number(amount)) * (APR / 100);
 	return (
 		<Box
 			maxW={{ base: '300px', sm: '250px' }}

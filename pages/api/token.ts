@@ -35,7 +35,7 @@ export default async function handler(
 			.then(() => {
 				res.status(200).json({ success: true })
 			})
-			.catch(e => {
+			.catch((e: { message: any }) => {
 				res.status(500).json({ success: false, message: e.message })
 			})
 	} else if (tokenType === 'Loyalty') {
@@ -53,7 +53,7 @@ export default async function handler(
 			.then(() => {
 				res.status(200).json({ success: true })
 			})
-			.catch(e => {
+			.catch((e: { message: any }) => {
 				res.status(500).json({ success: false, message: e.message })
 			})
 	} else {
@@ -71,7 +71,7 @@ export default async function handler(
 			.then(() => {
 				res.status(200).json({ success: true })
 			})
-			.catch(e => {
+			.catch((e: { message: any }) => {
 				res.status(500).json({ success: false, message: e.message })
 			})
 	}

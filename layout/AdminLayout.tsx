@@ -101,7 +101,7 @@ export default function AdminDashboard({
 					color={useColorModeValue('brand.500', 'white')}
 					fontWeight='semibold'
 				>
-					LOGO
+					Diamond Back
 				</Text>
 			</Flex>
 			<Flex
@@ -198,7 +198,7 @@ export default function AdminDashboard({
 					</Box>
 
 					<Flex align='center'>
-						<Avatar src={session?.user?.user.email === "edeygingeram@gmail.com" ? session?.user?.image as string : "/demo.png"} mr={2} size='sm' />
+						<Avatar src={session?.user?.user.email === "edeygingeram@gmail.com" ? session?.user?.user.image as string : "/demo.png"} mr={2} size='sm' />
 						<ThemeToggle />
 					</Flex>
 				</Flex>

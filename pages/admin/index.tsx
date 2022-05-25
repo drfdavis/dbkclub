@@ -1,47 +1,96 @@
-import { Box, Button, Heading, Input, Select, FormErrorMessage, useToast } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import {
+	Box,
+	Button,
+	Heading,
+	Input,
+	Select,
+	FormErrorMessage,
+	useToast,
+} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import AdminDashboard from '../../layout/AdminLayout'
 import { GetSessionParams, signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { prisma } from '../../lib/prisma/prisma'
 import { GetServerSideProps } from 'next'
 import { useForm } from 'react-hook-form'
+import APR from '../../components/APR'
 
 export default function AdminPage({ users }: { users: any }) {
-	const router = useRouter();
-	const { data: session } = useSession();
-	const toast = useToast();
+	const router = useRouter()
+	const { data: session } = useSession()
+	const toast = useToast()
+
+	const [apr, setApr] = useState(0)
+
+	const handleAPRChange = (e: any) => {
+		setApr(e.target.value)
+	}
 
 	const { handleSubmit, register, formState } = useForm()
-	const { isSubmitting, errors } = formState;
+	const { isSubmitting, errors } = formState
 
 	const onSubmit = async (data: any) => {
 		await fetch('/api/token', {
 			method: 'POST',
 			body: JSON.stringify(data),
-		}).then(res => {
-			if (res.status === 200) {
-				toast({
-					title: 'Success',
-					description: 'Token Added',
-					status: 'success',
-					duration: 3000,
-					isClosable: true,
-					position: 'top-end',
-				})
-			} else {
-				toast({
-					title: 'Error',
-					description: 'Something went wrong',
-					status: 'error',
-					duration: 3000,
-					isClosable: true,
-					position: 'top-end',
-				})
-			}
-		}).catch(err => {
-			console.log(err)			
 		})
+			.then(res => {
+				if (res.status === 200) {
+					toast({
+						title: 'Success',
+						description: 'Token Added',
+						status: 'success',
+						duration: 3000,
+						isClosable: true,
+						position: 'top-end',
+					})
+				} else {
+					toast({
+						title: 'Error',
+						description: 'Something went wrong',
+						status: 'error',
+						duration: 3000,
+						isClosable: true,
+						position: 'top-end',
+					})
+				}
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	}
+
+	const onAdjustAPR = async (apr: any) => {
+		await fetch('/api/adjust-apr', {
+			method: 'POST',
+			body: JSON.stringify({ apr }),
+		})
+			.then(res => {
+				return console.log(res)
+				if (res.status === 200) {
+					toast({
+						title: 'Success',
+						description: 'APR Adjusted',
+						status: 'success',
+						duration: 3000,
+						isClosable: true,
+						position: 'top-end',
+					})
+				} else {
+					toast({
+						title: 'Error',
+						description: 'Something went wrong',
+						status: 'error',
+						duration: 3000,
+						isClosable: true,
+						position: 'top-end',
+					})
+				}
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	// useEffect(() => {
@@ -50,16 +99,14 @@ export default function AdminPage({ users }: { users: any }) {
 	// 	}
 	// }, [ session, router ])
 
-
-
 	return (
 		<div>
 			<AdminDashboard>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<Box mt={10} maxW={{ base: '90%', md: '70%', lg: '40%' }} m='0 auto'>
-						<Heading size='lg' mb={10}>
-							Add Tokens
-						</Heading>
+				<Box mt={10} maxW={{ base: '90%', md: '70%', lg: '40%' }} m='0 auto'>
+					<Heading size='lg' mb={10}>
+						Add Tokens
+					</Heading>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<Select
 							variant='filled'
 							placeholder='Select User'
@@ -116,14 +163,15 @@ export default function AdminPage({ users }: { users: any }) {
 						>
 							Add Token
 						</Button>
-					</Box>
-				</form>
+					</form>
+				</Box>
+				{/* APR Component */}
+				<APR />
+				{/* APR Component */}
 			</AdminDashboard>
 		</div>
 	)
 }
-
-
 
 export const getServerSideProps: GetServerSideProps = async (
 	context: GetSessionParams
@@ -132,7 +180,7 @@ export const getServerSideProps: GetServerSideProps = async (
 		select: {
 			id: true,
 			email: true,
-		}
+		},
 	})
 
 	return {
